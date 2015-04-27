@@ -1,3 +1,34 @@
-CPP FILE
+#include <iostream>
+#include <fstream>
+#include <string>
 
-Test push
+using namespace std;
+
+
+int main()
+{
+  string line;
+  ifstream infile;
+  infile.open("test_data.txt");
+  
+  
+  
+ 
+  int count=0; //line numbers
+
+  while(!infile.eof())
+    {
+      getline(infile,line);
+      cout << line;
+      count++;
+    }
+
+  cout << count << endl;
+  
+  
+  infile.close();
+
+  return 0;
+}
+
+
