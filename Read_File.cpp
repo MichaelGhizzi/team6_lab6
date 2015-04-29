@@ -1,9 +1,8 @@
+//Main? Function?
 #include <iostream>
 #include <fstream>
 #include <string>
-
 using namespace std;
-
 
 int main()
 {
@@ -11,9 +10,6 @@ int main()
   ifstream infile;
   infile.open("test_data.txt");
   
-  
-  
- 
   int count=0; //line numbers
 
   while(!infile.eof())
