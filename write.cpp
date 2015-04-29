@@ -1,26 +1,25 @@
+//Write function
+//Going to write already parsed data to text file
+//not complete 
+
 #include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
-int main()
+void write()    //shouldnt be main 
 {
   string line;
   ofstream outfile;
   outfile.open("test_data.txt");
   
-  int count=0; //line numbers
+  outFile >> count; 
 
-  while(!infile.eof())
+  while(!outfile.eof())
     {
       getline(infile,line);
-      cin >> line; 
-      count++;
+      outFile >> line; 
     }
-
-  cout << count << endl;
-  
-  
   infile.close();
 
   return 0;
