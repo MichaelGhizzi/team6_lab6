@@ -1,10 +1,10 @@
-//Main? Function?
+//WIP
 #include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
-int main()
+void read()
 {
   string line;
   ifstream infile;
@@ -20,7 +20,6 @@ int main()
     }
 
   cout << count << endl;
-  
   
   infile.close();
 
