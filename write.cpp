@@ -1,6 +1,4 @@
-//Write function
-//Going to write already parsed data to text file
-//not complete 
+//WIP
 
 #include <iostream>
 #include <fstream>
