@@ -1,20 +1,8 @@
-// Ronald Dubarry
-// Michael Ghizzi
-// Alec N.
-//
-//
-
-// Lab Project #6
-// Compiled on XCode Version
-
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdio>
 #include <ctime>
-
-
 using namespace std;
 
 int main()
@@ -31,7 +19,6 @@ int main()
     TestData.open("test_data.txt");
     getline(TestData, junk);
     
-    
     while (!TestData.eof())
     {
         TestData >> Sample >> BgL >> RelTime >> AbsTime >> Transfer >> AMXAM >> Address >> Data >> Size >> Cycle;
@@ -42,20 +29,10 @@ int main()
         counter++;
     }
     
-    
-    
-    
     TestData.close();
-    
-    
-    
-    
     cout << "Done" << endl;
-    
     duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-    
     cout << "Time: " << duration << endl;
-    
     
     return 0;
 }
