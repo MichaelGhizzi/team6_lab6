@@ -6,9 +6,18 @@
 //Tony Dao - sangdao2014@csu.fullerton.edu
 
 #include <iostream>
+#include <cstdio>
+#include <ctime>
+using namespace std; 
 
 int main ()
 {
+	//starting clock
+	//put in function later? 
+	std::clock_t start;
+	double duration;
+	start = std::clock();
+	
 	//read function 
 	read(); 
 	
@@ -154,5 +163,9 @@ int main ()
 	
 	//write function 
 	write();
+	
+	//Ended time
+	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+   	cout << "Time: "<< duration <<'\n';
 }
 
