@@ -23,19 +23,19 @@ int main ()
 	
 	int word, line_num;
 	int discription_num;
-	std::cout << "Line " << line_num << ": Word " << word;
+	cout << "Line " << line_num << ": Word " << word;
 	
 	//table for the word 0
 
 	if (word == 0)
 	{
-		std::cout << ": Rec_Ctrl = " << discription_num << " (";
+		cout << ": Rec_Ctrl = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 0: std::cout << "no recording"; break;
-			case 2: std::cout << "no processing"; break;
-			case 3: std::cout << "processing & recording"; break;
-			default: std::cout << "unknown"; break;
+			case 0: cout << "no recording"; break;
+			case 2: cout << "no processing"; break;
+			case 3: cout << "processing & recording"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 
@@ -43,13 +43,13 @@ int main ()
 	
 	else if (word == 1) 
 	{
-		std::cout << ": Cmd_Type = " << discription_num << " (";
+		cout << ": Cmd_Type = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 3: std::cout << "Type A"; break;
-			case 4: std::cout << "Type B"; break;
-			case 5: std::cout << "Type C"; break;
-			default: std::cout << "unknown"; break;
+			case 3: cout << "Type A"; break;
+			case 4: cout << "Type B"; break;
+			case 5: cout << "Type C"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 
@@ -57,12 +57,12 @@ int main ()
 
 	else if (word == 4) 
 	{
-		std::cout << ": Rec_Raw = " << discription_num << " (";
+		cout << ": Rec_Raw = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 0: std::cout << "diable"; break;
-			case 1: std::cout << "enable"; break;
-			default: std::cout << "unknown"; break;
+			case 0: cout << "diable"; break;
+			case 1: cout << "enable"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 		
@@ -70,26 +70,26 @@ int main ()
 
 	else if (word == 5) 
 	{
-		std::cout << ": Cmd_ID = " << discription_num;
+		cout << ": Cmd_ID = " << discription_num;
 	}
 
 	//table for the word 10
 
 	else if (word == 10) 
 	{
-		std::cout << ": Num_Responses = " << discription_num 
+		cout << ": Num_Responses = " << discription_num 
 	}
 
 	//table for the word 15
 
 	else if (word == 15) 
 	{
-		std::cout << ": Reset_Enable = " << discription_num << " (";
+		cout << ": Reset_Enable = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 0: std::cout << "diable"; break;
-			case 1: std::cout << "enable"; break;
-			default: std::cout << "unknown"; break;
+			case 0: cout << "diable"; break;
+			case 1: cout << "enable"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 
@@ -97,12 +97,12 @@ int main ()
 
 	else if (word == 22) 
 	{
-		std::cout << ": Direction = " << discription_num << " (";
+		cout << ": Direction = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 0: std::cout << "Right"; break;
-			case 1: std::cout << "Left"; break;
-			default: std::cout << "unknown"; break;
+			case 0: cout << "Right"; break;
+			case 1: cout << "Left"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 
@@ -110,19 +110,19 @@ int main ()
 
 	else if (word == 32) 
 	{
-		std::cout << ": Num_Samples = " << discription_num;
+		cout << ": Num_Samples = " << discription_num;
 	}
 
 	//table for the word 37
 
 	else if (word == 37) 
 	{
-		std::cout << ": Parity = " << discription_num << " (";
+		cout << ": Parity = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 0: std::cout << "even"; break;
-			case 1: std::cout << "odd"; break;
-			default: std::cout << "unknown"; break;
+			case 0: cout << "even"; break;
+			case 1: cout << "odd"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 
@@ -130,12 +130,12 @@ int main ()
 
 	else if (word == 38) 
 	{
-		std::cout << ": Test = " << discription_num << " (";
+		cout << ": Test = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 0: std::cout << "disable"; break;
-			case 1: std::cout << "enable"; break;
-			default: std::cout << "unknown"; break;
+			case 0: cout << "disable"; break;
+			case 1: cout << "enable"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 
@@ -143,12 +143,12 @@ int main ()
 
 	else if (word == 40) 
 	{
-		std::cout << ": Ctrl_Enable = " << discription_num << " (";
+		cout << ": Ctrl_Enable = " << discription_num << " (";
 		switch (discription_num)
 		{
-			case 0: std::cout << "disable"; break;
-			case 1: std::cout << "enable"; break;
-			default: std::cout << "unknown"; break;
+			case 0: cout << "disable"; break;
+			case 1: cout << "enable"; break;
+			default: cout << "unknown"; break;
 		}
 	}
 
@@ -156,10 +156,10 @@ int main ()
 
 	else if (word == 41) 
 	{
-		std::cout << ": Code = " << discription_num;
+		cout << ": Code = " << discription_num;
 	}
 
-	std::cout << ")\n";
+	cout << ")\n";
 	
 	//write function 
 	write();
