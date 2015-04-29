@@ -10,6 +10,8 @@
 int main ()
 {
 	//read function 
+	read(); 
+	
 	int word, line_num;
 	int discription_num;
 	std::cout << "Line " << line_num << ": Word " << word;
@@ -151,5 +153,6 @@ int main ()
 	std::cout << ")\n";
 	
 	//write function 
+	write();
 }
 
