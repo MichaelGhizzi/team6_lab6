@@ -8,7 +8,50 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
+#include <fstream>
+#include <string>
+#include <iomanip>
+#include <queue>
+//Need to include headers when we implement them 
 using namespace std; 
+
+//WIP READ 
+void read()
+{
+    fstream TestData;
+    string Sample, BgL, RelTime, AbsTime, Transfer, AMXAM, Address, Data, Size, Cycle;
+    string junk;
+    int counter = 2;
+    
+    file.open("test_data.txt");
+    getline(file, junk);
+    
+    while (!file.eof())
+    {
+        file >> Sample >> BgL >> RelTime >> AbsTime >> Transfer >> AMXAM >> Address >> Data >> Size >> Cycle;
+        getline(TestData, junk);
+        //cin.ignore();
+        if (Address == "40000810" || Address == "40000C18")
+            cout << "Line: " << counter << "    " << Address << "    " << Data << "    " << Size << "    " << Cycle << endl;
+        counter++;
+    }
+    file.close(); 
+}
+
+//WIP WRITE 
+void write()
+{
+	ofstream outfile;
+	outfile.open("test_data.txt");
+  
+  	outFile >> count; 
+
+	while(!outfile.eof())
+	{
+	   getline(infile,line);
+	   outFile >> line; 
+    	}
+}
 
 int main ()
 {
@@ -18,6 +61,7 @@ int main ()
 	double duration;
 	start = std::clock();
 	
+
 	//read function 
 	read(); 
 	
@@ -161,11 +205,16 @@ int main ()
 
 	cout << ")\n";
 	
-	//write function 
-	write();
-	
-	//Ended time
+   	//Opens file to write to function 
+	write(); 
+
+   	//closes files
+   	inFile.close();
+   	outFile.close();
+   	
+   	//Ended time
 	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
    	cout << "Time: "<< duration <<'\n';
+   	return 0; 
 }
 
