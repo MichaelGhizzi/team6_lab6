@@ -3,12 +3,12 @@
 //  cpsc254parseaddress
 //
 //  Created by Deshawn Dana on 4/28/15.
-//  Copyright (c) 2015 Deshawn Dana. All rights reserved.
 //
 
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 struct Record
@@ -19,7 +19,7 @@ struct Record
 
 bool checkLengthSD(Record parsed_info);
 bool checkLengthDS(Record parsed_info);
-int getWord(Record parsed_info);
+int convertHexToInt(Record parsed_info);
 
 int main()
 {
@@ -56,8 +56,6 @@ int main()
         if (checkLengthSD(parsed_info))
         {
             
-            //get Data amount at address
-            
             
             cout << "Line " << line << " ";
             
@@ -71,6 +69,7 @@ int main()
             }
             
             cout << parsed_info.Address << " " << parsed_info.Data << " " << parsed_info.Size << " " << parsed_info.Cycle << endl;
+            cout << "Line " << line << ": " << parsed_info.Cycle << " S-D command " << convertHexToInt(parsed_info) << " words" << endl << endl;
             
         }
         else if(checkLengthDS(parsed_info))
@@ -94,6 +93,7 @@ int main()
         
             
             cout << parsed_info.Address << " " << parsed_info.Data << " " << parsed_info.Size << " " << parsed_info.Cycle << endl;
+            cout << "Line " << line << ": " << parsed_info.Cycle << " D-S command " << convertHexToInt(parsed_info) << " words" << endl << endl;
             
         }
         
@@ -125,16 +125,20 @@ bool checkLengthDS(Record parsed_info)
     return false;
         
 }
-/*
-int getWords(Record parsed_info);
+
+int convertHexToInt(Record parsed_info)
 {
-    int data;
-    if(parsed_info.Data == "00000000")
-    {
-        data = 0;
-        return data
-    }
-    else
-        return
+    //code sourced from stackoverflow
+    
+    unsigned int x;
+    stringstream ss;
+    
+    ss << std::hex << parsed_info.Data;
+    ss >> x;
+    // output it as a signed type
+    //std::cout << static_cast<int>(x) << std::endl;
+    
+    //return x/2 for word count
+    return (x/2);
 }
- */
+
