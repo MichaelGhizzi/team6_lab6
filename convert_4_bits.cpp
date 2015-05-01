@@ -34,7 +34,7 @@ public:
 		case 0: bitShift = (length >> 12) & 4; break;
 		case 1: bitShift = (length >> 13); break;
 		case 4: bitShift = length & 2; break;
-		case 5: bitShift = (length & (2**7 -1)); break;
+		case 5: bitShift = (length & 127); break;
 		case 10: bitShift = length >> 10; break;
 		case 15: bitShift = (length >> 1) & 2; break;
 		case 22: bitShift = (length >> 2) & 2; break;
