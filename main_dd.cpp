@@ -9,8 +9,10 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "Header.h"
 
 using namespace std;
+
 struct Record
 {
     string Address, Data, Size, Cycle;
@@ -29,6 +31,8 @@ int main()
     int line = 1;
     Record parsed_info;
     string test_line;
+    
+    string left_4bit, right_4bit;
     
     int start_word = 0, num_of_word = 0;
     
@@ -133,6 +137,13 @@ int main()
             
             if(increase)
             {
+                cout << parsed_info.Data << endl;
+                
+                left_4bit = parsed_info.Data.substr(0,4);
+                right_4bit = parsed_info.Data.substr(4,8);
+                
+                cout << left_4bit << " " << right_4bit << " " << endl;
+                
                 cout << "Line " << line << ": Word " << start_word << endl;
                 cout << "Line " << line << ": Word " << start_word+1 << endl;
             }
@@ -165,6 +176,12 @@ int main()
             
             if(increase)
             {
+                left_4bit = parsed_info.Data.substr(0,4);
+                right_4bit = parsed_info.Data.substr(4,8);
+                
+                cout << left_4bit << " " << right_4bit << " " << endl;
+                
+                
                 cout << "Line " << line << ": Word " << start_word << endl;
                 cout << "Line " << line << ": Word " << start_word+1 << endl;
             }
@@ -185,6 +202,7 @@ int main()
             
             
         }
+        
         
         line++;
         if(line > 750)
