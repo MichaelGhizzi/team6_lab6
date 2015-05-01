@@ -1,9 +1,3 @@
-//
-//  main.cpp
-//  cpsc254parseaddress
-//
-//  Created by Deshawn Dana on 4/28/15.
-//
 
 #include <iostream>
 #include <fstream>
@@ -25,12 +19,12 @@ int convertHexToInt(Record parsed_info);
 
 
 int main()
-{
-    
-    fstream f;
+{    
+    fstream file;
     int line = 1;
     Record parsed_info;
     string test_line;
+	string Sample, BgL, RelTime, AbsTime, Transfer, AMXAM, Address, Data, Size, Cycle;
     
     string left_4bit, right_4bit;
     
@@ -40,215 +34,167 @@ int main()
     bool d_to_s = false;
     bool increase = false;
     
-    f.open("sample.txt", ios::in);
+    file.open("test_data.txt", ios::in);
     //skips first line b/c of title
     
-    f.ignore(500,'\n');
+    file.ignore(500,'\n');
     
     //since skips first line, make line start at 2
-    line++;
+    line++;    
     
-    
-    while(f.good())
+    while(file.good())
     {
         //cout << "line # : " << line << endl;
-
-        getline(f, test_line);
+		file >> Sample >> BgL >> RelTime >> AbsTime >> Transfer >> AMXAM >> Address >> Data >> Size >> Cycle;
+        getline(file, test_line);
 
         //cout << test_line << endl << endl;
         
         //use substr to parse portion of a string
-        parsed_info.Address = test_line.substr(81, 8);
-        parsed_info.Data = test_line.substr(98, 8);
-        parsed_info.Size = test_line.substr(110, 3);
-        parsed_info.Cycle = test_line.substr(117, 2);
-        
+		parsed_info.Address = Address;
+        parsed_info.Data = Data;
+        parsed_info.Size = Size;
+        parsed_info.Cycle = Cycle;
+
+		left_4bit = parsed_info.Data.substr(0,4);
+        right_4bit = parsed_info.Data.substr(4,8);
+
         //check length for S-D
-        if (checkLengthSD(parsed_info))
+        if (parsed_info.Address == "40000810")
         {
-            cout << "Line " << line << " ";
+            std::cout << "Line " << line << ": ";
             
             if(parsed_info.Cycle == "Wr")
             {
                 parsed_info.Cycle = "Write";
-            }
-            else if(parsed_info.Cycle == "Rd")
-            {
-                parsed_info.Cycle = "Read";
-            }
-            
-            num_of_word = convertHexToInt(parsed_info);
-            
-            //cout << parsed_info.Address << " " << parsed_info.Data << " " << parsed_info.Size << " " << parsed_info.Cycle << endl;
-            cout << "Line " << line << ": " << parsed_info.Cycle << " S-D command " << convertHexToInt(parsed_info) << " words" << endl << endl;
-            
-            
-            if (num_of_word > 0)
-            {
-                s_to_d = true;
-                
             }
             else
             {
-                s_to_d = false;
-            }
-            
-        }
-        else if(checkLengthDS(parsed_info))
-        {
-            
-            cout << "Line " << line << " ";
-            
-            
-            //check Data amount at address
-            
-            
-            
-            if(parsed_info.Cycle == "Wr")
-            {
-                parsed_info.Cycle = "Write";
-            }
-            else if(parsed_info.Cycle == "Rd")
-            {
                 parsed_info.Cycle = "Read";
             }
-        
             
             num_of_word = convertHexToInt(parsed_info);
             
-            //cout << parsed_info.Address << " " << parsed_info.Data << " " << parsed_info.Size << " " << parsed_info.Cycle << endl;
-            cout << "Line " << line << ": " << parsed_info.Cycle << " D-S command " << convertHexToInt(parsed_info) << " words" << endl << endl;
+            std::cout << parsed_info.Cycle << " S-D command " << convertHexToInt(parsed_info) << " words" << endl;
+                        
+            if (num_of_word > 0)
+            {
+                s_to_d = true;
+            }
+			else
+				cout << endl;
+            
+        }
+        else if(parsed_info.Address == "40000C18")
+        {            
+            std::cout << "Line " << line << ": ";            
+            
+            //check Data amount at address 
+			if(parsed_info.Cycle == "Wr")
+            {
+                parsed_info.Cycle = "Write";
+            }
+            else
+            {
+                parsed_info.Cycle = "Read";
+            }
+            
+            num_of_word = convertHexToInt(parsed_info);
+            
+            std::cout << parsed_info.Cycle << " D-S command " << convertHexToInt(parsed_info) << " words" << endl;
             
             if (num_of_word > 0)
             {
                 d_to_s = true;
             }
-            
+			else
+				cout << endl;
         }
         else if (s_to_d)
         {
-            start_word = stoi(parsed_info.Address.substr(5,3), nullptr, 16) - 2072;
-            
-            
-            if(parsed_info.Address == "40000818" )
-            {
-                increase = true;
-            }
-            
+			num_of_word -= 2;
+			if(num_of_word > 1 && parsed_info.Address == "40000818")
+			{
+				increase = true;
+			}
+			start_word = stoi(parsed_info.Address.substr(5,3), nullptr, 16) - 2072;
+			start_word /= 2;
             if(increase)
             {
-                cout << parsed_info.Data << endl;
-                
-                left_4bit = parsed_info.Data.substr(0,4);
-                right_4bit = parsed_info.Data.substr(4,8);
-                
-                cout << left_4bit << " " << right_4bit << " " << endl;
-                
-                cout << "Line " << line << ": Word " << start_word << endl;
-                cout << "Line " << line << ": Word " << start_word+1 << endl;
+				convert_4_bits StoD_left_4(left_4bit, start_word);
+                std::cout << "Line " << line << ": Word " << start_word << ": " << StoD_left_4.get_value() << endl;
+				convert_4_bits StoD_right_4(right_4bit, start_word+1);
+                std::cout << "Line " << line << ": Word " << start_word+1 << ": " << StoD_right_4.get_value() << endl;
             }
             else
             {
-                cout << "Line " << line << ": Word " << start_word << endl;
-                cout << "Line " << line << ": Word " << start_word-1 << endl;
-            }
-            
-            
-            num_of_word = num_of_word - 2;
-            
+				convert_4_bits StoD_right_4(right_4bit, start_word+1);
+                std::cout << "Line " << line << ": Word " << start_word+1 << ": " << StoD_right_4.get_value() << endl;
+				convert_4_bits StoD_left_4(left_4bit, start_word);
+                std::cout << "Line " << line << ": Word " << start_word << ": " << StoD_left_4.get_value() << endl;
+            }            
+
             if (num_of_word <= 0)
             {
                 s_to_d = false;
                 increase = false;
+				cout << endl;
             }
-            
-            
         }
         else if (d_to_s)
         {
-            start_word = stoi(parsed_info.Address.substr(5,3), nullptr, 16) - 3104;
-            
-            
-            if(parsed_info.Address == "40000C18" )
-            {
-                increase = true;
-            }
-            
+			num_of_word -= 2;
+			if(num_of_word > 1 && parsed_info.Address == "40000C18")
+			{
+				increase = true;
+			}
+
+			start_word = stoi(parsed_info.Address.substr(5,3), nullptr, 16) - 3104;
+			start_word /= 2;
             if(increase)
             {
-                left_4bit = parsed_info.Data.substr(0,4);
-                right_4bit = parsed_info.Data.substr(4,8);
-                
-                cout << left_4bit << " " << right_4bit << " " << endl;
-                
-                
-                cout << "Line " << line << ": Word " << start_word << endl;
-                cout << "Line " << line << ": Word " << start_word+1 << endl;
+				convert_4_bits DtoS_left_4(left_4bit, start_word);
+                std::cout << "Line " << line << ": Word " << start_word << ": " << DtoS_left_4.get_value() << endl;
+				convert_4_bits DtoS_right_4(right_4bit, start_word+1);
+                std::cout << "Line " << line << ": Word " << start_word+1 << ": " << DtoS_right_4.get_value() << endl;
             }
             else
             {
-                cout << "Line " << line << ": Word " << start_word << endl;
-                cout << "Line " << line << ": Word " << start_word-1 << endl;
+				convert_4_bits DtoS_right_4(right_4bit, start_word+1);
+                std::cout << "Line " << line << ": Word " << start_word+1 << ": " << DtoS_right_4.get_value() << endl;
+				convert_4_bits DtoS_left_4(left_4bit, start_word);
+                std::cout << "Line " << line << ": Word " << start_word << ": " << DtoS_left_4.get_value() << endl;
             }
-            
-            
-            num_of_word = num_of_word - 2;
-            
+
             if (num_of_word <= 0)
             {
                 s_to_d = false;
                 increase = false;
+				cout << endl;
             }
-            
-            
         }
-        
-        
         line++;
-        if(line > 750)
+        if(line > 800)
         {
             break;
         }
 
     }
-    
-    
-    return 0;
+	file.close();
+	std::system("pause");
+	return 0;
 }
-bool checkLengthSD(Record parsed_info)
-{
-    if(parsed_info.Address == "40000810")
-    {
-        return true;
-    }
-    
-    return false;
-}
-    
-bool checkLengthDS(Record parsed_info)
-{
-    if(parsed_info.Address == "40000C18")
-    {
-        return true;
-    }
-    
-    return false;
-        
-}
+
 
 int convertHexToInt(Record parsed_info)
 {
-    //code sourced from stackoverflow
-    
+    //code sourced from stackoverflow    
     unsigned int x;
     stringstream ss;
-    
+
     ss << std::hex << parsed_info.Data;
     ss >> x;
-    // output it as a signed type
-    //std::cout << static_cast<int>(x) << std::endl;
     
     //return x/2 for word count
     return (x/2);
 }
-
