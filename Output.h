@@ -6,7 +6,18 @@ using namespace std;
 class OUTPUT
 {
 public:
-	void append(string);	// Appends to the output file
+// Appends to the output file
+	void append(string);	
 private:
-	ofstream outFile;		// output file object to write to file
+// output file object to write to file
+	ofstream outFile;	
 };
+
+
+// Appends to the output file
+void OUTPUT::append(string line)
+{
+	outFile.open("output.txt", ios::app);
+	outFile << line << endl;
+	outFile.close();
+}
