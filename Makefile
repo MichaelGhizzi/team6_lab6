@@ -1,7 +1,7 @@
 default : main.exe
 
-main.o : main_dd.cpp Header.h
-	g++ -c main_dd.cpp
+main.o : main.cpp ConvertBit.h DataRate.h
+	g++ -c main.cpp
 
 main.exe: main.o
 	g++ main.o -o main.exe
