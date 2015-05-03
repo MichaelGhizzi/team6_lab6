@@ -223,23 +223,6 @@ long fastcountlines(string filename)
 	return 0;
 }
 
-//Counts the number of lines in file
-//can delete, doesnt do anything
-long slowcountlines(string filename)
-{	
-	ifstream readfile;
-	readfile.open(filename.c_str());
-
-	char c;
-	long h = 0;
-	while (readfile.get(c))
-	if (c == '\n')
-		++h;
-
-	readfile.close();
-	return h;
-}
-
 // Reads from the file
 void fileread(string filename)
 {
