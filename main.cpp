@@ -18,11 +18,12 @@ string get_rate_type(double);
 int main(int argc, char* argv[])
 { 		
   
-if(argc != 2)
+  if(argc != 2)
 	{
 		std::cerr << "Usage: " << argv[0] << " <File Name>" << std::endl;
 		return 1;
 	}
+
 	ofstream write_file; //variable to write
 	fstream open_file; // variable to read
 	
@@ -38,20 +39,7 @@ if(argc != 2)
 	string left_4bit, right_4bit, result;
 	
      
-    open_file.open(argv[1]);
-	write_file.open ("Output.txt");
-  
-    //skips first line b/c of title    
-    open_file.ignore(500,'\n');
-    
-    //since skips first line, make line start at 2
-    line++;    
-    
-    while(open_file.good())
-    {
-        //cout << "line # : " << line << endl;
-		open_file >> Sample >> BgL >> RelTime >> AbsTime >> Transfer >> AMXAM >> Address >> Data >> Size >> Cycle;
-        getline(open_file, junk);
+
 
 		//turn wr to write and rd to read
 		if(Cycle == "Wr")
@@ -221,7 +209,7 @@ if(argc != 2)
             {
                 s_to_d = false;
                 increase = false;
-				write_file << endl;
+		write_file << endl; // space between commands
             }
         }
         else if (d_to_s)
