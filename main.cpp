@@ -38,7 +38,20 @@ int main(int argc, char* argv[])
 	string Sample, BgL, RelTime, AbsTime, Transfer, AMXAM, Address, Data, Size, Cycle, junk;
 	string left_4bit, right_4bit, result;
 	
-     
+    open_file.open(argv[1]);
+    write_file.open ("Output.txt"); // opens file through terminal
+  
+    //skips first line b/c of title    
+    open_file.ignore(500,'\n');
+    
+    //since skips first line, make line start at 2
+    line++;    
+    
+    while(open_file.good())
+      {
+        //cout << "line # : " << line << endl;
+		open_file >> Sample >> BgL >> RelTime >> AbsTime >> Transfer >> AMXAM >> Address >> Data >> Size >> Cycle;
+        getline(open_file, junk);
 
 
 		//turn wr to write and rd to read
