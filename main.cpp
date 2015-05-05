@@ -10,13 +10,9 @@
 using namespace std;
 
 int hex_to_int(string);
-
 bool check(int);
-
 string num_to_string (int);
-
 string increasing_word(int, int);
-
 string get_rate_type(double);
 
 int main(int argc, char* argv[])
@@ -29,14 +25,19 @@ int main(int argc, char* argv[])
 
 	ofstream write_file;
     fstream open_file;
+	
+	bool s_to_d = false, d_to_s = false, increase = false, pre_StoD_cycle = true,  pre_DtoS_cycle = true;
+	
     int line = 1;
+	int start_word = 0, num_of_word = 0; 
+	int get_StoD_time = 0, get_DtoS_time = 0, num_StoD_read = 0, num_StoD_write= 0, num_DtoS_read = 0, num_DtoS_write= 0;
+	
+	double read_StoD_time = 0, write_StoD_time = 0, read_DtoS_time = 0, write_DtoS_time = 0;
+	
 	string Sample, BgL, RelTime, AbsTime, Transfer, AMXAM, Address, Data, Size, Cycle, junk;
     string left_4bit, right_4bit, result;
-    int start_word = 0, num_of_word = 0;    
-    bool s_to_d = false, d_to_s = false, increase = false, pre_StoD_cycle = true, pre_DtoS_cycle = true;
-	double read_StoD_time = 0, write_StoD_time = 0, read_DtoS_time = 0, write_DtoS_time = 0;
-	int get_StoD_time = 0, get_DtoS_time = 0, num_StoD_read = 0, num_StoD_write= 0, num_DtoS_read = 0, num_DtoS_write= 0;
-    
+	
+     
     open_file.open(argv[1]);
 	write_file.open ("Output.txt");
   
@@ -54,13 +55,9 @@ int main(int argc, char* argv[])
 
 		//turn wr to write and rd to read
 		if(Cycle == "Wr")
-        {
             Cycle = "Write";
-        }
         else
-        {
             Cycle = "Read";
-        }
 
 		//this divide the data into 2 (Ex:12345678 -> left = 1234, right = 5678)
 		if(s_to_d || d_to_s)
@@ -73,6 +70,7 @@ int main(int argc, char* argv[])
 		if(get_StoD_time > 0)
 		{
 			calculate_data_rate rate_StoD(RelTime);
+			
 			if(pre_StoD_cycle == true) //S-to-D write
 			{
 				num_StoD_write++;				
@@ -83,6 +81,7 @@ int main(int argc, char* argv[])
 				num_StoD_read++;
 				read_StoD_time += rate_StoD.get_time();
 			}
+			
 			get_StoD_time--;
 		}
 
@@ -90,6 +89,7 @@ int main(int argc, char* argv[])
 		if(get_DtoS_time > 0)
 		{
 			calculate_data_rate rate_DtoS(RelTime);
+			
 			if(pre_DtoS_cycle == true) // D-to-S write
 			{
 				num_DtoS_write++;
@@ -100,6 +100,7 @@ int main(int argc, char* argv[])
 				num_DtoS_read++;
 				read_DtoS_time += rate_DtoS.get_time();
 			}
+			
 			get_DtoS_time--;
 		}
 
@@ -180,6 +181,7 @@ int main(int argc, char* argv[])
 
 			//convert hex address to word number
 			start_word = (hex_to_int(Address.substr(5,3)) - 2072) / 2;
+			
 			// check if the word number begin at 0
             if(increase) 
             {
@@ -242,30 +244,30 @@ int main(int argc, char* argv[])
             {
 				if(check(start_word))
 				{
-				convert_4_bits DtoS_left_4(left_4bit, start_word);
-				result = increasing_word(start_word,DtoS_left_4.get_value());
-				write_file << "Line " << line << ": Word " << result;
+					convert_4_bits DtoS_left_4(left_4bit, start_word);
+					result = increasing_word(start_word,DtoS_left_4.get_value());
+					write_file << "Line " << line << ": Word " << result;
 				}
 				if(check(start_word+1))
 				{
-				convert_4_bits DtoS_right_4(right_4bit, start_word+1);
-				result = increasing_word(start_word+1,DtoS_right_4.get_value());
-				write_file << "Line " << line << ": Word " << result;
+					convert_4_bits DtoS_right_4(right_4bit, start_word+1);
+					result = increasing_word(start_word+1,DtoS_right_4.get_value());
+					write_file << "Line " << line << ": Word " << result;
 				}
             }
             else
             {
 				if(check(start_word+1))
 				{
-				convert_4_bits DtoS_right_4(right_4bit, start_word+1);
-				result = increasing_word(start_word+1,DtoS_right_4.get_value());
-				write_file << "Line " << line << ": Word " << result;
+					convert_4_bits DtoS_right_4(right_4bit, start_word+1);
+					result = increasing_word(start_word+1,DtoS_right_4.get_value());
+					write_file << "Line " << line << ": Word " << result;
 				}
 				if(check(start_word))
 				{
-				convert_4_bits DtoS_left_4(left_4bit, start_word);
-				result = increasing_word(start_word,DtoS_left_4.get_value());
-				write_file << "Line " << line << ": Word " << result;
+					convert_4_bits DtoS_left_4(left_4bit, start_word);
+					result = increasing_word(start_word,DtoS_left_4.get_value());
+					write_file << "Line " << line << ": Word " << result;
 				}
             }
 			//stop the D-to-S print
@@ -279,6 +281,7 @@ int main(int argc, char* argv[])
         line++;
 	
     }
+	
 	//print data rate
 	write_file << "Read S-to-D: " << get_rate_type((num_StoD_read*32) / read_StoD_time) << endl;
 	write_file << "Read D-to-S: "<<	get_rate_type((num_DtoS_read*32) / read_DtoS_time) << endl;
@@ -334,7 +337,7 @@ string increasing_word(int word, int discription_num)
 	discription += num_to_string(word);
 	if (word == 0)
 	{
-		 discription += ": Rec_Ctrl = " + num_to_string(discription_num) + " (";
+		discription += ": Rec_Ctrl = " + num_to_string(discription_num) + " (";
 		switch (discription_num)
 		{
 			case 0: discription += "no recording)"; break;
