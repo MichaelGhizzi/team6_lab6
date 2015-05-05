@@ -17,25 +17,25 @@ string get_rate_type(double);
 
 int main(int argc, char* argv[])
 { 		
-	if(argc != 2)
+  
+if(argc != 2)
 	{
 		std::cerr << "Usage: " << argv[0] << " <File Name>" << std::endl;
 		return 1;
 	}
-
-	ofstream write_file;
-    fstream open_file;
+	ofstream write_file; //variable to write
+	fstream open_file; // variable to read
 	
-	bool s_to_d = false, d_to_s = false, increase = false, pre_StoD_cycle = true,  pre_DtoS_cycle = true;
+	bool s_to_d = false, d_to_s = false, increase = false, pre_StoD_cycle = true,  pre_DtoS_cycle = true; //boolean flags 
 	
-    int line = 1;
+	int line = 1;
 	int start_word = 0, num_of_word = 0; 
 	int get_StoD_time = 0, get_DtoS_time = 0, num_StoD_read = 0, num_StoD_write= 0, num_DtoS_read = 0, num_DtoS_write= 0;
 	
 	double read_StoD_time = 0, write_StoD_time = 0, read_DtoS_time = 0, write_DtoS_time = 0;
 	
 	string Sample, BgL, RelTime, AbsTime, Transfer, AMXAM, Address, Data, Size, Cycle, junk;
-    string left_4bit, right_4bit, result;
+	string left_4bit, right_4bit, result;
 	
      
     open_file.open(argv[1]);
@@ -330,32 +330,32 @@ bool check(int word)
 	}
 }
 
-string increasing_word(int word, int discription_num)
+string increasing_word(int word, int description_num)
 {
-	string discription = "";
+	string description = "";
 	//table for the word 0
-	discription += num_to_string(word);
+	description += num_to_string(word);
 	if (word == 0)
 	{
-		discription += ": Rec_Ctrl = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Rec_Ctrl = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 0: discription += "no recording)"; break;
-			case 2: discription += "no processing)"; break;
-			case 3: discription += "processing & recording)"; break;
-			default: discription += "unknown)"; break;
+			case 0: description += "no recording)"; break;
+			case 2: description += "no processing)"; break;
+			case 3: description += "processing & recording)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 	//table for the word 1	
 	else if (word == 1) 
 	{
-		discription += ": Cmd_Type = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Cmd_Type = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 4: discription += "Type A)"; break;
-			case 5: discription += "Type B)"; break;
-			case 6: discription += "Type C)"; break;
-			default: discription += "unknown)"; break;
+			case 4: description += "Type A)"; break;
+			case 5: description += "Type B)"; break;
+			case 6: description += "Type C)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 
@@ -363,12 +363,12 @@ string increasing_word(int word, int discription_num)
 
 	else if (word == 4) 
 	{
-		discription += ": Rec_Raw = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Rec_Raw = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 0: discription += "disable)"; break;
-			case 1: discription += "enable)"; break;
-			default: discription += "unknown)"; break;
+			case 0: description += "disable)"; break;
+			case 1: description += "enable)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 		
@@ -376,26 +376,26 @@ string increasing_word(int word, int discription_num)
 
 	else if (word == 5) 
 	{
-		discription += ": Cmd_ID = " + num_to_string(discription_num);
+		description += ": Cmd_ID = " + num_to_string(description_num);
 	}
 
 	//table for the word 10
 
 	else if (word == 10) 
 	{
-		discription += ": Num_Responses = " + num_to_string(discription_num);
+		description += ": Num_Responses = " + num_to_string(description_num);
 	}
 
 	//table for the word 15
 
 	else if (word == 15) 
 	{
-		discription += ": Reset_Enable = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Reset_Enable = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 0: discription += "disable)"; break;
-			case 1: discription += "enable)"; break;
-			default: discription += "unknown)"; break;
+			case 0: description += "disable)"; break;
+			case 1: description += "enable)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 
@@ -403,12 +403,12 @@ string increasing_word(int word, int discription_num)
 
 	else if (word == 22) 
 	{
-		discription += ": Direction = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Direction = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 0: discription += "Right)"; break;
-			case 1: discription += "Left)"; break;
-			default: discription += "unknown)"; break;
+			case 0: description += "Right)"; break;
+			case 1: description += "Left)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 
@@ -416,19 +416,19 @@ string increasing_word(int word, int discription_num)
 
 	else if (word == 32) 
 	{
-		discription += ": Num_Samples = " + num_to_string(discription_num);
+		description += ": Num_Samples = " + num_to_string(description_num);
 	}
 
 	//table for the word 37
 
 	else if (word == 37) 
 	{
-		discription += ": Parity = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Parity = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 0: discription += "even)"; break;
-			case 1: discription += "odd)"; break;
-			default: discription += "unknown)"; break;
+			case 0: description += "even)"; break;
+			case 1: description += "odd)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 
@@ -436,12 +436,12 @@ string increasing_word(int word, int discription_num)
 
 	else if (word == 38) 
 	{
-		discription += ": Test = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Test = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 0: discription += "disable)"; break;
-			case 1: discription += "enable)"; break;
-			default: discription += "unknown)"; break;
+			case 0: description += "disable)"; break;
+			case 1: description += "enable)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 
@@ -449,12 +449,12 @@ string increasing_word(int word, int discription_num)
 
 	else if (word == 40) 
 	{
-		discription += ": Ctrl_Enable = " + num_to_string(discription_num) + " (";
-		switch (discription_num)
+		description += ": Ctrl_Enable = " + num_to_string(description_num) + " (";
+		switch (description_num)
 		{
-			case 0: discription += "disable)"; break;
-			case 1: discription += "enable)"; break;
-			default: discription += "unknown)"; break;
+			case 0: description += "disable)"; break;
+			case 1: description += "enable)"; break;
+			default: description += "unknown)"; break;
 		}
 	}
 
@@ -462,10 +462,10 @@ string increasing_word(int word, int discription_num)
 
 	else if (word == 41) 
 	{
-		discription += ": Code = " + num_to_string(discription_num);
+		description += ": Code = " + num_to_string(description_num);
 	}
-	discription += "\n";
-	return discription;
+	description += "\n";
+	return description;
 }
 
 string get_rate_type(double rate)
