@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	
 	bool s_to_d = false, d_to_s = false, increase = false, pre_StoD_cycle = true,  pre_DtoS_cycle = true; //boolean flags 
 	
-	int line = 1;
+	int line = 2; // We start at line 2 because of the title line
 	int start_word = 0, num_of_word = 0; 
 	int get_StoD_time = 0, get_DtoS_time = 0, num_StoD_read = 0, num_StoD_write= 0, num_DtoS_read = 0, num_DtoS_write= 0;
 	
@@ -43,9 +43,6 @@ int main(int argc, char* argv[])
   
     //skips first line b/c of title    
     open_file.ignore(500,'\n');
-    
-    //since skips first line, make line start at 2
-    line++;    
     
     while(open_file.good())
       {
